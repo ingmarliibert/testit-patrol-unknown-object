@@ -1,0 +1,15 @@
+<launch>
+  <arg name="name"/>
+  <arg name="x" default="14"/>
+  <arg name="y" default="20"/>
+  <arg name="dx" default="2"/>
+  <arg name="dy" default="2"/>
+  <node name="$(anon unknown_object_detector)" pkg="patrol_unknown_object" type="unknown_object_detector.py" output="screen">
+    <param name="name" value="$(arg name)"/>
+    <param name="x" value="$(arg x)" />
+    <param name="y" value="$(arg y)" />
+    <param name="dx" value="$(arg dx)" />
+    <param name="dy" value="$(arg dy)" />
+  </node>
+</launch>
+
