@@ -50,3 +50,7 @@ class UnknownObjectDetector:
     def register_uo_status(self, msg):
         # type: (Bool) -> None
         self.uo_planted = self.uo_planted or msg.data
+
+
+if __name__ == '__main__':
+    UnknownObjectDetector()
