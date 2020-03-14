@@ -25,11 +25,17 @@ class UnknownObjectPlanter:
         rospy.sleep(2)
 
     def get_uo_coordinates(self):
-        for param, default in [("x", "14"), ("y", "20"), ("dx", "2"), ("dy", "2")]:
-            yield int(rospy.get_param("~{}".format(param), default))
+        for param in ["x", "y", "dx", "dy"]:
+            param_value = int(rospy.get_param("~{}".format(param), None))
+            if not param_value:
+                raise RuntimeError("Param " + param + " not specified")
+            yield param_value
 
     def get_robot_name(self):
-        return rospy.get_param("~name", "")
+        name = rospy.get_param("~name", None)
+        if not name:
+            raise RuntimeError("Robot name not specified")
+        return name
 
     def robot_at_uo(self, msg):
         # type: (PoseWithCovarianceStamped) -> bool
