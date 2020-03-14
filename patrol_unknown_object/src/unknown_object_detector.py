@@ -29,11 +29,13 @@ class UnknownObjectDetector:
             param_value = int(rospy.get_param("~{}".format(param), None))
             if not param_value:
                 raise RuntimeError("Param " + param + " not specified")
+            yield param_value
 
     def get_robot_name(self):
         name = rospy.get_param("~name", None)
         if not name:
             raise RuntimeError("Robot name not specified")
+        return name
 
     def robot_at_uo(self, msg):
         # type: (PoseWithCovarianceStamped) -> bool
