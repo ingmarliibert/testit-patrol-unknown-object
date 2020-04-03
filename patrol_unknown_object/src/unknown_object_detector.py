@@ -44,7 +44,10 @@ class UnknownObjectDetector:
                self.uo_y - self.uo_dy <= position.y <= self.uo_y + self.uo_dy
 
     def sees_uo(self, msg):
-        return Bool(self.robot_at_uo(msg) and self.uo_planted)
+        uo = self.robot_at_uo(msg)
+        # TODO: if laused kaks branchi
+        planted = self.uo_planted
+        return Bool(uo and planted)
 
     def publish_robot_sees_uo(self, msg):
         self.robot_at_uo_publisher.publish(self.sees_uo(msg))
