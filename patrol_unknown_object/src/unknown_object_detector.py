@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/local/bin/coverage2 run
 
 import rospy
 from geometry_msgs.msg import PoseWithCovarianceStamped
