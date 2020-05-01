@@ -40,18 +40,28 @@ class UnknownObjectDetector:
     def robot_at_uo(self, msg):
         # type: (PoseWithCovarianceStamped) -> bool
         position = msg.pose.pose.position
-        return self.uo_x - self.uo_dx <= position.x <= self.uo_x + self.uo_dx and \
-               self.uo_y - self.uo_dy <= position.y <= self.uo_y + self.uo_dy
+        in_x = self.uo_x - self.uo_dx <= position.x <= self.uo_x + self.uo_dx
+        in_y = self.uo_y - self.uo_dy <= position.y <= self.uo_y + self.uo_dy
+        if in_x and in_y:
+            return True
+        return False
 
     def sees_uo(self, msg):
-        return Bool(self.robot_at_uo(msg) and self.uo_planted)
+        uo = self.robot_at_uo(msg)
+        planted = self.uo_planted
+        if uo and planted:
+            response = Bool()
+            response.data = True
+            return response
+        return Bool(False)
 
     def publish_robot_sees_uo(self, msg):
         self.robot_at_uo_publisher.publish(self.sees_uo(msg))
 
     def register_uo_status(self, msg):
         # type: (Bool) -> None
-        self.uo_planted = self.uo_planted or msg.data
+        self.uo_planted = self.uo_planted or msg.\
+            data
 
 
 if __name__ == '__main__':
