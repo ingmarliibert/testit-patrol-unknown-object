@@ -61,7 +61,7 @@ class UnknownObjectDetector:
 
     def publish_robot_sees_uo(self, msg):
         current_time = time.time()
-        if self.last_publish - current_time > self.wait_time:
+        if current_time - self.last_publish > self.wait_time:
             self.robot_at_uo_publisher.publish(self.sees_uo(msg))
             self.last_publish = current_time
 
