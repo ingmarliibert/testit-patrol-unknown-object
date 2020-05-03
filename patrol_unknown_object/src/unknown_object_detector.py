@@ -1,4 +1,5 @@
 #!/usr/local/bin/coverage2 run
+import time
 
 import rospy
 from geometry_msgs.msg import PoseWithCovarianceStamped
@@ -20,6 +21,9 @@ class UnknownObjectDetector:
                                                           self.publish_robot_sees_uo)
         self.robot_at_uo_publisher = rospy.Publisher('/{}/sees_unknown_object'.format(self.robot_name), Bool,
                                                      queue_size=1)
+
+        self.last_publish = time.time()
+        self.wait_time = int(rospy.get_param("~wait", 2))
 
         rospy.spin()
         rospy.sleep(2)
@@ -56,7 +60,10 @@ class UnknownObjectDetector:
         return Bool(False)
 
     def publish_robot_sees_uo(self, msg):
-        self.robot_at_uo_publisher.publish(self.sees_uo(msg))
+        current_time = time.time()
+        if self.last_publish - current_time > self.wait_time:
+            self.robot_at_uo_publisher.publish(self.sees_uo(msg))
+            self.last_publish = current_time
 
     def register_uo_status(self, msg):
         # type: (Bool) -> None
