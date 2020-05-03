@@ -23,7 +23,8 @@ class UnknownObjectDetector:
                                                      queue_size=1)
 
         self.last_publish = time.time()
-        self.wait_time = int(rospy.get_param("~wait", 2))
+        self.wait_time = int(rospy.get_param("~wait", 1.5))
+        rospy.loginfo("Wait time: " + str(self.wait_time))
 
         rospy.spin()
         rospy.sleep(2)

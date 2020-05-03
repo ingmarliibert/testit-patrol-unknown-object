@@ -4,7 +4,7 @@
   <arg name="y" default="20"/>
   <arg name="dx" default="2"/>
   <arg name="dy" default="2"/>
-  <arg name="wait" default="2"/>
+  <arg name="wait" default="1.5"/>
   <node name="$(anon unknown_object_detector)" pkg="patrol_unknown_object" type="unknown_object_detector.py" output="screen">
     <param name="name" value="$(arg name)"/>
     <param name="wait" value="$(arg wait)"/>
